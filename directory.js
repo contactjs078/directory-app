@@ -46,3 +46,29 @@ function displayResults(list) {
 }
 
 loadCSV();
+
+// let residences = [];
+
+async function loadExcel() {
+  const response = await fetch('data/residences.xlsx');
+  const arrayBuffer = await response.arrayBuffer();
+  const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  const jsonData = XLSX.utils.sheet_to_json(sheet);
+  residences = jsonData.map(r => ({
+    name: r['Residence Name'],
+    address: r['Address'],
+    city: r['City'],
+    region: r['Region'],
+    phone: r['Phone Number'],
+    email: r['Email'],
+    website: r['Website'],
+    amenities: r['Amenities'],
+    map: r['Google Maps Link'],
+    desc: r['Description'],
+    available: r['Available Units']
+  }));
+  displayResults(residences);
+}
+
+loadExcel();
