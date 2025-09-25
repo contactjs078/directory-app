@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Ontario Retirement Directory</title>
+  <title>Ontario Retirement Residence Directory</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"></script>
 </head>
 <body>
   <header>
@@ -14,6 +15,11 @@
   </header>
 
   <section class="filters">
+    <div class="view-toggle">
+      <label><input type="radio" name="viewMode" value="card" checked /> Listing Card View</label>
+      <label><input type="radio" name="viewMode" value="table" /> Table View</label>
+    </div>
+
     <label for="regionFilter">Region:</label>
     <select id="regionFilter">
       <option value="">All Regions</option>
@@ -39,7 +45,13 @@
     </select>
 
     <button id="exportBtn">Export to Excel</button>
+    <button id="printBtn">Print</button>
+    <!-- <button id="pdfBtn">Export to PDF</button> -->
   </section>
+
+  <p id="entryCount" class="entry-count"></p>
+
+  <div id="cardContainer" class="card-view"></div>
 
   <section class="directory">
     <table>
