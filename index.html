@@ -1,90 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Retirement Directory</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: sans-serif; font-size: 18px; line-height: 1.6; padding: 20px; max-width: 100%; margin: auto; }
-    .filters, .listing { margin-bottom: 20px; }
-    .card { border: 1px solid #ccc; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
-    .amenities span { margin-right: 10px; background: #eee; padding: 5px; border-radius: 3px; }
-  .card {
-      width: 100%;
-  box-sizing: border-box;
-  border: 2px solid #444;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  background-color: #fff;
-  font-size: 18px;
-  line-height: 1.6;
-}
-.card:focus {
-  outline: 3px solid #0073aa;
-}
-.tag {
-  background-color: #e0e0e0;
-  padding: 5px 10px;
-  margin-right: 5px;
-  border-radius: 4px;
-  display: inline-block;
-}
-.contact-btn {
-  background-color: #0073aa;
-  color: white;
-  padding: 10px 15px;
-  text-decoration: none;
-  border-radius: 5px;
-  display: inline-block;
-  margin-top: 10px;
-}
-.contact-btn:focus {
-  outline: 2px solid #fff;
-  background-color: #005f8d;
-}
-@media (max-width: 600px) {
-  body {
-    font-size: 20px;
-    padding: 10px;
-  }
-  .filters {
-    display: block;
-  }
-  .filters label, .filters input, .filters select {
-    display: block;
-    margin-bottom: 10px;
-    width: 100%;
-  }
-}
-</style>
+  <meta charset="UTF-8" />
+  <title>Ontario Retirement Directory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
+  <header>
+    <h1>Ontario Retirement Residence Directory</h1>
+    <p>Search and explore retirement residences across Ontario.</p>
+  </header>
 
-  <h1>Retirement Residences Directory</h1>
+  <section class="filters">
+    <label for="regionFilter">Region:</label>
+    <select id="regionFilter">
+      <option value="">All Regions</option>
+      <option value="Toronto">Toronto</option>
+      <option value="Ottawa">Ottawa</option>
+    </select>
 
-  <div class="filters">
-    <label>Region:
-      <select id="regionFilter">
-        <option value="">All</option>
-        <option value="Toronto">Toronto</option>
-        <option value="Ottawa">Ottawa</option>
-      </select>
-    </label>
+    <label for="searchInput">Keyword:</label>
+    <input type="text" id="searchInput" placeholder="Search by name or city" />
 
-    <label>Amenities:
-      <input type="checkbox" value="Pool"> Pool
-      <input type="checkbox" value="Gym"> Gym
-      <input type="checkbox" value="Pet-Friendly"> Pet-Friendly
-    </label>
+    <details>
+      <summary><strong>Filter by Amenities</strong></summary>
+      <label><input type="checkbox" value="Pool" /> Pool</label>
+      <label><input type="checkbox" value="Gym" /> Gym</label>
+      <label><input type="checkbox" value="Pet-Friendly" /> Pet-Friendly</label>
+    </details>
+  </section>
 
-    <input type="text" id="searchInput" placeholder="Search by name or city">
-    <button onclick="applyFilters()">Search</button>
-  </div>
-
-  <div id="results"></div>
+  <section class="directory">
+    <table>
+      <thead>
+        <tr>
+          <th>Residence Name</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Website</th>
+          <th>Amenities</th>
+          <th>Description</th>
+          <th>Map</th>
+        </tr>
+      </thead>
+      <tbody id="directoryBody"></tbody>
+    </table>
+  </section>
 
   <script src="directory.js"></script>
-  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 </body>
 </html>

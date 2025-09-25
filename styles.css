@@ -1,0 +1,70 @@
+body {
+  font-family: Georgia, serif;
+  background-color: #f8f8f8;
+  color: #333;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+header h1 {
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+header p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.filters {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.filters label {
+  display: block;
+  margin-top: 10px;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+details {
+  margin-top: 15px;
+}
+
+details summary {
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+th {
+  background-color: #e0e0e0;
+}
