@@ -176,7 +176,8 @@ iframe {
 
 
 /* Responsive styles */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) { */
+@media (max-width: 1000px) {
   body {
     padding: 10px;
     font-size: 16px;
@@ -207,15 +208,49 @@ iframe {
     font-size: 16px;
   }
 
-  table {
+  .table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  word-break: break-word;
+}
+
+  /* table {
     display: block;
     overflow-x: auto;
     width: 100%;
+    font-size: 16px;
   }
 
   th, td {
     white-space: nowrap;
     padding: 10px;
+  } */
+
+  /* Hide all columns except Residence Name */
+  table thead th:not(:first-child),
+  table tbody td:not(:first-child) {
+    display: none;
+  }
+
+  /* Make rows tappable */
+  table tbody tr {
+    cursor: pointer;
+  }
+
+  table tbody td:first-child {
+    font-weight: bold;
+    padding: 12px;
   }
 
   .pagination {
@@ -240,6 +275,7 @@ iframe {
     padding: 15px;
   }
 }
+
 
 .popup-overlay {
   position: fixed;
