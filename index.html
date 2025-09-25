@@ -30,24 +30,38 @@
       <label><input type="checkbox" value="Gym" /> Gym</label>
       <label><input type="checkbox" value="Pet-Friendly" /> Pet-Friendly</label>
     </details>
+
+    <label for="pageSize">Entries per page:</label>
+    <select id="pageSize">
+      <option value="5">5</option>
+      <option value="10" selected>10</option>
+      <option value="25">25</option>
+    </select>
+
+    <button id="exportBtn">Export to Excel</button>
   </section>
 
   <section class="directory">
     <table>
       <thead>
         <tr>
-          <th>Residence Name</th>
-          <th>Address</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>Website</th>
-          <th>Amenities</th>
-          <th>Description</th>
-          <th>Map</th>
+          <th data-key="name">Residence Name</th>
+          <th data-key="address">Address</th>
+          <th data-key="phone">Phone</th>
+          <th data-key="email">Email</th>
+          <th data-key="website">Website</th>
+          <th data-key="amenities">Amenities</th>
+          <th data-key="desc">Description</th>
+          <th data-key="map">Map</th>
         </tr>
       </thead>
       <tbody id="directoryBody"></tbody>
     </table>
+    <div class="pagination">
+      <button id="prevPage">Previous</button>
+      <span id="pageInfo"></span>
+      <button id="nextPage">Next</button>
+    </div>
   </section>
 
   <script src="directory.js"></script>

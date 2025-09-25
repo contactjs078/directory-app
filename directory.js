@@ -1,11 +1,12 @@
 let residences = [];
+let filteredResults = [];
+let currentPage = 1;
+let pageSize = 10;
+let sortConfig = { key: null, direction: 'asc' };
 
 window.addEventListener('DOMContentLoaded', () => {
-  fetch('public/residences.xlsx')
-    .then(res => {
-      if (!res.ok) throw new Error("Failed to load Excel file");
-      return res.arrayBuffer();
-    })
+  fetch('residences.xlsx')
+    .then(res => res.arrayBuffer())
     .then(data => {
       const workbook = XLSX.read(data, { type: 'array' });
       const sheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -22,11 +23,8 @@ window.addEventListener('DOMContentLoaded', () => {
         desc: r['Description'] || '',
         available: r['Available Units'] || ''
       }));
-      displayResults(residences); // Show all by default
-    })
-    .catch(err => {
-      console.error("Error loading Excel file:", err);
-      document.getElementById('directoryBody').innerHTML = `<tr><td colspan="8">Failed to load directory data.</td></tr>`;
+      filteredResults = [...residences];
+      renderTable();
     });
 
   document.getElementById('regionFilter').addEventListener('change', applyFilters);
@@ -34,6 +32,37 @@ window.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.filters input[type="checkbox"]').forEach(cb =>
     cb.addEventListener('change', applyFilters)
   );
+  document.getElementById('pageSize').addEventListener('change', e => {
+    pageSize = parseInt(e.target.value) || 10;
+    currentPage = 1;
+    renderTable();
+  });
+  document.getElementById('prevPage').addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderTable();
+    }
+  });
+  document.getElementById('nextPage').addEventListener('click', () => {
+    const totalPages = Math.ceil(filteredResults.length / pageSize);
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderTable();
+    }
+  });
+  document.querySelectorAll('th[data-key]').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.getAttribute('data-key');
+      if (sortConfig.key === key) {
+        sortConfig.direction = sortConfig.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortConfig.key = key;
+        sortConfig.direction = 'asc';
+      }
+      renderTable();
+    });
+  });
+  document.getElementById('exportBtn').addEventListener('click', exportToExcel);
 });
 
 function applyFilters() {
@@ -41,26 +70,42 @@ function applyFilters() {
   const search = document.getElementById('searchInput').value.toLowerCase();
   const amenityFilters = Array.from(document.querySelectorAll('.filters input[type="checkbox"]:checked')).map(cb => cb.value.toLowerCase());
 
-  const filtered = residences.filter(r => {
+  filteredResults = residences.filter(r => {
     const matchesRegion = !region || r.region.toLowerCase() === region;
     const matchesSearch = !search || r.name.toLowerCase().includes(search) || r.address.toLowerCase().includes(search);
     const matchesAmenities = amenityFilters.length === 0 || amenityFilters.every(a => r.amenities.toLowerCase().includes(a));
     return matchesRegion && matchesSearch && matchesAmenities;
   });
 
-  displayResults(filtered);
+  currentPage = 1;
+  renderTable();
 }
 
-function displayResults(list) {
+function sortData(data) {
+  if (!sortConfig.key) return data;
+  return [...data].sort((a, b) => {
+    const valA = a[sortConfig.key]?.toLowerCase() || '';
+    const valB = b[sortConfig.key]?.toLowerCase() || '';
+    return sortConfig.direction === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+  });
+}
+
+function renderTable() {
   const tbody = document.getElementById('directoryBody');
   tbody.innerHTML = '';
 
-  if (list.length === 0) {
+  const sorted = sortData(filteredResults);
+  const totalPages = Math.ceil(sorted.length / pageSize);
+  const start = (currentPage - 1) * pageSize;
+  const pageData = sorted.slice(start, start + pageSize);
+
+  if (pageData.length === 0) {
     tbody.innerHTML = `<tr><td colspan="8">No residences match your filters.</td></tr>`;
+    document.getElementById('pageInfo').textContent = '';
     return;
   }
 
-  list.forEach(r => {
+  pageData.forEach(r => {
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>${r.name}</td>
@@ -74,4 +119,13 @@ function displayResults(list) {
     `;
     tbody.appendChild(row);
   });
+
+  document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+}
+
+function exportToExcel() {
+  const sheet = XLSX.utils.json_to_sheet(filteredResults);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, sheet, "Directory");
+  XLSX.writeFile(wb, "filtered_directory.xlsx");
 }
