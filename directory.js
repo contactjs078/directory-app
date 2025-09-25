@@ -6,13 +6,20 @@ let sortConfig = { key: null, direction: 'asc' };
 let viewMode = 'card';
 
 window.addEventListener('DOMContentLoaded', () => {
+
+  // Close popup listener
+  document.getElementById('closePopup').addEventListener('click', () => {
+    document.getElementById('popupOverlay').style.display = 'none';
+  });
+
+  // Load Excel
   fetch('residences.xlsx')
     .then(res => res.arrayBuffer())
     .then(data => {
       const workbook = XLSX.read(data, { type: 'array' });
       const sheet = workbook.Sheets[workbook.SheetNames[0]];
       const jsonData = XLSX.utils.sheet_to_json(sheet);
-      residences = jsonData.map(r => ({
+    residences = jsonData.map(r => ({
         name: r['Residence Name'] || '',
         address: `${r['Address'] || ''}, ${r['City'] || ''}`,
         region: r['Region'] || '',
@@ -22,11 +29,14 @@ window.addEventListener('DOMContentLoaded', () => {
         amenities: r['Amenities'] || '',
         map: r['Google Maps Link'] || '',
         desc: r['Description'] || '',
-        available: r['Available Units'] || ''
-      }));
+        available: r['Available Units'] || '',
+        details: r['Additional Details'] || ''
+    }));
       filteredResults = [...residences];
       renderTable();
     });
+
+
 
   document.getElementById('regionFilter').addEventListener('change', applyFilters);
   document.getElementById('searchInput').addEventListener('input', applyFilters);
@@ -74,6 +84,7 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('pdfBtn').addEventListener('click', exportToPDF);
 });
 
+
 function applyFilters() {
   const region = document.getElementById('regionFilter').value.toLowerCase();
   const search = document.getElementById('searchInput').value.toLowerCase();
@@ -110,6 +121,7 @@ function renderTable() {
   const cardContainer = document.getElementById('cardContainer');
   const entryCount = document.getElementById('entryCount');
 
+  // Show total filtered entries
   entryCount.textContent = `Showing ${filteredResults.length} residence${filteredResults.length !== 1 ? 's' : ''} matching your filters.`;
 
   if (viewMode === 'card') {
@@ -136,6 +148,7 @@ function renderTable() {
         <p><strong>Description:</strong> ${r.desc}</p>
         <p><a href="${r.map}" target="_blank">View Map</a></p>
       `;
+      card.addEventListener('click', () => showPopup(r));
       cardContainer.appendChild(card);
     });
   } else {
@@ -161,9 +174,11 @@ function renderTable() {
         <td>${r.desc}</td>
         <td><a href="${r.map}" target="_blank">View Map</a></td>
       `;
+      row.addEventListener('click', () => showPopup(r));
       tbody.appendChild(row);
     });
 
+    // Update sort arrows
     document.querySelectorAll('th[data-key]').forEach(th => {
       th.classList.remove('sort-asc', 'sort-desc');
       if (th.getAttribute('data-key') === sortConfig.key) {
@@ -174,6 +189,7 @@ function renderTable() {
 
   document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
 }
+
 
 
 function exportToExcel() {
@@ -302,6 +318,24 @@ function exportToPDF() {
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
   }).from(container).save();
 }
+
+function showPopup(residence) {
+  const popup = document.getElementById('popupOverlay');
+  const content = document.getElementById('popupContent');
+  content.innerHTML = `
+    <h2>${residence.name}</h2>
+    <p><strong>Address:</strong> ${residence.address}</p>
+    <p><strong>Phone:</strong> ${residence.phone}</p>
+    <p><strong>Email:</strong> ${residence.email}</p>
+    <p><strong>Website:</strong> <a href="${residence.website}" target="_blank">${residence.website}</a></p>
+    <p><strong>Amenities:</strong> ${residence.amenities}</p>
+    <p><strong>Description:</strong> ${residence.desc}</p>
+    <p><strong>Map:</strong> <a href="${residence.map}" target="_blank">View Map</a></p>
+    <p><strong>More Info:</strong> ${residence.details || '—'}</p>
+  `;
+  popup.style.display = 'flex';
+}
+
 
 
 
