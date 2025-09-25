@@ -148,6 +148,7 @@ tr:nth-child(even) {
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 20px;
+  margin-bottom: 30px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
@@ -262,7 +263,7 @@ tr:nth-child(even) {
   border: none;
   font-size: 18px;
   color: #0073aa;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   cursor: pointer;
 }
 
