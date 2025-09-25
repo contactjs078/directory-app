@@ -121,7 +121,16 @@ function renderTable() {
   });
 
   document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+
+  // Update sort arrows
+  document.querySelectorAll('th[data-key]').forEach(th => {
+    th.classList.remove('sort-asc', 'sort-desc');
+    if (th.getAttribute('data-key') === sortConfig.key) {
+      th.classList.add(sortConfig.direction === 'asc' ? 'sort-asc' : 'sort-desc');
+    }
+  });
 }
+
 
 function exportToExcel() {
   const sheet = XLSX.utils.json_to_sheet(filteredResults);
