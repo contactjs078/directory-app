@@ -1,3 +1,4 @@
+/* Base styles */
 body {
   font-family: "Segoe UI", "Helvetica Neue", sans-serif;
   background-color: #f4f6f8;
@@ -6,6 +7,7 @@ body {
   max-width: 1200px;
   margin: auto;
   font-size: 18px;
+  line-height: 1.6;
 }
 
 header h1 {
@@ -20,6 +22,7 @@ header p {
   color: #555;
 }
 
+/* Filters section */
 .filters {
   background-color: #ffffff;
   border: 1px solid #ccc;
@@ -56,6 +59,7 @@ details summary {
   margin-bottom: 10px;
 }
 
+/* Table styles */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -99,11 +103,14 @@ tr:nth-child(even) {
   background-color: #fafafa;
 }
 
+/* Pagination */
 .pagination {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 button {
@@ -118,4 +125,57 @@ button {
 
 button:hover {
   background-color: #005f8d;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  header h1 {
+    font-size: 24px;
+  }
+
+  header p {
+    font-size: 16px;
+  }
+
+  .filters {
+    padding: 15px;
+  }
+
+  input[type="text"],
+  select,
+  button {
+    font-size: 16px;
+    padding: 10px;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  details summary {
+    font-size: 16px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  th, td {
+    white-space: nowrap;
+    padding: 10px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  button {
+    width: 100%;
+  }
 }
