@@ -25,19 +25,91 @@
     <label for="regionFilter">Region:</label>
     <select id="regionFilter">
       <option value="">All Regions</option>
-      <option value="Toronto">Toronto</option>
-      <option value="Ottawa">Ottawa</option>
+      <option value="Ontario - Ottawa">Ontario - Ottawa</option>
+      <option value="Ontario - Ottawa Valley">Ontario - Ottawa Valley</option>
+      <option value="Ontario - Kingston Area">Ontario - Kingston Area</option>
+      <option value="Ontario - GTA">Ontario - GTA</option>
     </select>
 
     <label for="searchInput">Keyword:</label>
-    <input type="text" id="searchInput" placeholder="Search by name or city" />
+    <input type="text" id="searchInput" placeholder="Search using a keyword" />
 
     <details>
+      <button id="clearAmenities" type="button">Clear Filters</button>
       <summary><strong>Filter by Amenities</strong></summary>
-      <label><input type="checkbox" value="Pool" /> Pool</label>
-      <label><input type="checkbox" value="Gym" /> Gym</label>
-      <label><input type="checkbox" value="Pet-Friendly" /> Pet-Friendly</label>
+      <div class="amenities-grid">
+        <label><input type="checkbox" value="24 Hour Security" /> 24 Hour Security</label>
+        <label><input type="checkbox" value="Activity Room" /> Activity Room</label>
+        <label><input type="checkbox" value="Assisted Living" /> Assisted Living</label>
+        <label><input type="checkbox" value="BBQ" /> BBQ</label>
+        <label><input type="checkbox" value="Bicycle Room" /> Bicycle Room</label>
+        <label><input type="checkbox" value="Bilingual" /> Bilingual</label>
+        <label><input type="checkbox" value="Billard" /> Billard</label>
+        <label><input type="checkbox" value="Bocce Ball Court" /> Bocce Ball Court</label>
+        <label><input type="checkbox" value="Cable" /> Cable</label>
+        <label><input type="checkbox" value="Car Wash" /> Car Wash</label>
+        <label><input type="checkbox" value="Central Outdoor Pavilion For Large Group Activities" /> Central Outdoor Pavilion For Large Group Activities</label>
+        <label><input type="checkbox" value="Chapel" /> Chapel</label>
+        <label><input type="checkbox" value="Cinema" /> Cinema</label>
+        <label><input type="checkbox" value="Commercial Space" /> Commercial Space</label>
+        <label><input type="checkbox" value="Dementia" /> Dementia</label>
+        <label><input type="checkbox" value="Dining Room" /> Dining Room</label>
+        <label><input type="checkbox" value="Dog Washing Station" /> Dog Washing Station</label>
+        <label><input type="checkbox" value="Firepit" /> Firepit</label>
+        <label><input type="checkbox" value="Fitness Room" /> Fitness Room</label>
+        <label><input type="checkbox" value="Fountain" /> Fountain</label>
+        <label><input type="checkbox" value="Foyer/Lounge" /> Foyer/Lounge</label>
+        <label><input type="checkbox" value="Front Desk Concierge" /> Front Desk Concierge</label>
+        <label><input type="checkbox" value="Government Subsity" /> Government Subsity</label>
+        <label><input type="checkbox" value="Gym" /> Gym</label>
+        <label><input type="checkbox" value="Hobby Room" /> Hobby Room</label>
+        <label><input type="checkbox" value="Horseshoe Pit" /> Horseshoe Pit</label>
+        <label><input type="checkbox" value="Housekeeping" /> Housekeeping</label>
+        <label><input type="checkbox" value="Independent" /> Independent</label>
+        <label><input type="checkbox" value="Kids Area" /> Kids Area</label>
+        <label><input type="checkbox" value="Kitchenette" /> Kitchenette</label>
+        <label><input type="checkbox" value="Laundry Service" /> Laundry Service</label>
+        <label><input type="checkbox" value="Library" /> Library</label>
+        <label><input type="checkbox" value="Locker Rooms" /> Locker Rooms</label>
+        <label><input type="checkbox" value="Medication" /> Medication</label>
+        <label><input type="checkbox" value="Monthly Activities" /> Monthly Activities</label>
+        <label><input type="checkbox" value="Nursing Care" /> Nursing Care</label>
+        <label><input type="checkbox" value="On Site Staff" /> On Site Staff</label>
+        <label><input type="checkbox" value="One Bedroom + Den Suites" /> One Bedroom + Den Suites</label>
+        <label><input type="checkbox" value="One Bedroom Suites" /> One Bedroom Suites</label>
+        <label><input type="checkbox" value="Onsite Wi-Fi" /> Onsite Wi-Fi</label>
+        <label><input type="checkbox" value="Outdoor Pergola" /> Outdoor Pergola</label>
+        <label><input type="checkbox" value="Parking" /> Parking</label>
+        <label><input type="checkbox" value="Party Room With Full Kitchen" /> Party Room With Full Kitchen</label>
+        <label><input type="checkbox" value="Pets' Area" /> Pets' Area</label>
+        <label><input type="checkbox" value="Phone" /> Phone</label>
+        <label><input type="checkbox" value="Physiotherapy" /> Physiotherapy</label>
+        <label><input type="checkbox" value="Pickleball Court" /> Pickleball Court</label>
+        <label><input type="checkbox" value="Pond" /> Pond</label>
+        <label><input type="checkbox" value="Pool" /> Pool</label>
+        <label><input type="checkbox" value="Putting Green" /> Putting Green</label>
+        <label><input type="checkbox" value="Respite Care" /> Respite Care</label>
+        <label><input type="checkbox" value="Salon" /> Salon</label>
+        <label><input type="checkbox" value="Saltwater Pool" /> Saltwater Pool</label>
+        <label><input type="checkbox" value="Sauna" /> Sauna</label>
+        <label><input type="checkbox" value="Shuttle Service" /> Shuttle Service</label>
+        <label><input type="checkbox" value="Storage" /> Storage</label>
+        <label><input type="checkbox" value="Studio + Den Suites" /> Studio + Den Suites</label>
+        <label><input type="checkbox" value="Studio Suites" /> Studio Suites</label>
+        <label><input type="checkbox" value="Sunroom" /> Sunroom</label>
+        <label><input type="checkbox" value="Swings" /> Swings</label>
+        <label><input type="checkbox" value="TV Room" /> TV Room</label>     
+        <label><input type="checkbox" value="Two Bedroom +Den Suites" /> Two Bedroom +Den Suites</label>
+        <label><input type="checkbox" value="Two Bedroom Suites" /> Two Bedroom Suites</label>
+        <label><input type="checkbox" value="Underground Parking" /> Underground Parking</label>
+        <label><input type="checkbox" value="Virtual Golf" /> Virtual Golf</label>
+        <label><input type="checkbox" value="Walking Paths" /> Walking Paths</label>
+        <label><input type="checkbox" value="Waterfall" /> Waterfall</label>
+        <label><input type="checkbox" value="Weekly Happy Hour" /> Weekly Happy Hour</label>
+        <label><input type="checkbox" value="Yoga Studio" /> Yoga Studio</label>
+      </div>
     </details>
+    
 
     <label for="pageSize">Entries per page:</label>
     <select id="pageSize">
@@ -48,7 +120,7 @@
 
     <button id="exportBtn">Export to Excel</button>
     <button id="printBtn">Print</button>
-    <button id="pdfBtn">Export to PDF</button>
+    <!-- <button id="pdfBtn">Export to PDF</button> -->
   </section>
 
   <p id="entryCount" class="entry-count"></p>
@@ -65,8 +137,8 @@
           <th data-key="phone">Phone</th>
           <th data-key="email">Email</th>
           <th data-key="website">Website</th>
-          <th data-key="amenities">Amenities</th>
-          <th data-key="desc">Description</th>
+          <!-- <th data-key="amenities">Amenities</th>
+          <th data-key="desc">Description</th> -->
           <th data-key="map">Map</th>
         </tr>
       </thead>
