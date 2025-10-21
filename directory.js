@@ -258,7 +258,7 @@ function renderTable() {
         <p><strong>Phone:</strong> ${r.phone}</p>
         <p><strong>Email:</strong> <a href="mailto:${r.email}">${r.email}</a></p>
         <p><strong>Website:</strong> <a href="${r.website}" target="_blank" rel="noopener noreferrer">link</a></p>
-        <p><strong>Amenities:</strong> ${r.amenities}</p>
+        <!--<p><strong>Amenities:</strong> ${r.amenities}</p>-->
         <!--<p><strong>Description:</strong> ${r.desc}</p>-->
         <p><a href="${r.map}" target="_blank" rel="noopener noreferrer">View Map</a></p>
       `;
