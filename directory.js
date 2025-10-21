@@ -1,7 +1,7 @@
 let residences = [];
 let filteredResults = [];
 let currentPage = 1;
-let pageSize = 10;
+let pageSize = 5;
 let sortConfig = { key: null, direction: 'asc' };
 let viewMode = 'card';
 
@@ -44,7 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
     cb.addEventListener('change', applyFilters)
   );
   document.getElementById('pageSize').addEventListener('change', e => {
-    pageSize = parseInt(e.target.value) || 10;
+    pageSize = parseInt(e.target.value) || 5;
     currentPage = 1;
     renderTable();
   });
