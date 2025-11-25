@@ -1,7 +1,8 @@
 /* Base layout */
 body {
   font-family: "Segoe UI", "Helvetica Neue", sans-serif;
-  background-color: #f4f6f8;
+  /* background-color: #f4f6f8; */
+  background: transparent;
   color: #333;
   padding: 20px;
   max-width: 1200px;
