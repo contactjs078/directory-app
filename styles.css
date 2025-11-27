@@ -2,7 +2,6 @@
 body {
   font-family: "Segoe UI", "Helvetica Neue", sans-serif;
   background-color: #f4f6f8;
-  /* background: transparent; */
   color: #333;
   padding: 20px;
   max-width: 1200px;
@@ -27,30 +26,32 @@ header p {
 .filters {
   background-color: #ffffff;
   border: 1px solid #ccc;
-  padding: 20px;
-  margin-bottom: 30px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .filters label {
   display: block;
-  margin-top: 15px;
+  margin-top: 2px;
   font-weight: bold;
 }
 
 input[type="text"],
 select {
   width: 100%;
-  padding: 12px;
-  margin-top: 5px;
-  font-size: 18px;
+  padding: 6px 8px;
+  margin-top: 2px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 6px;
+  height: 40px;            
+  box-sizing: border-box;
 }
 
 details {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 details summary {
@@ -62,21 +63,21 @@ details summary {
 
 .view-toggle {
   display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 2px;
   font-size: 18px;
 }
 
 /* Buttons */
 button {
-  padding: 10px 20px;
-  font-size: 18px;
+  padding: 6px 12px;
+  font-size: 16px;
   background-color: #0073aa;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 3px;
 }
 
 button:hover {
@@ -148,19 +149,29 @@ tr:nth-child(even) {
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 30px;
+  padding: 10px 18px;
+  margin-bottom: 22px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  font-size: 19px;
+  line-height: 1.5;
 }
 
 .residence-card h3 {
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-size: 26px;
+  margin: 0 0 4px 0; 
   color: #0073aa;
 }
 
 .residence-card p {
-  margin: 6px 0;
+  margin: 2px 0;
+}
+
+.residence-card p strong {
+  font-weight: 600;       
+}
+
+.residence-card p:last-child {
+  margin-bottom: 0 !important;       
 }
 
 .entry-count {
@@ -193,15 +204,15 @@ iframe {
   }
 
   .filters {
-    padding: 15px;
+    padding: 12px 14px;
   }
 
   input[type="text"],
   select,
   button {
     font-size: 16px;
-    padding: 10px;
-    margin-top: 10px;
+    padding: 6px 8px;
+    margin-top: 3px;
     width: 100%;
   }
 
@@ -277,7 +288,7 @@ th, td {
   }
 
   .amenities-grid {
-    grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 }
 
@@ -327,16 +338,27 @@ th, td {
 
 .amenities-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px 20px;
+  /* auto-fit = fill as many columns as fit, min 180px each */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px 16px;
   margin-top: 15px;
+  width: 100%;
 }
+
 
 .amenities-grid label {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  gap: 8px;
   font-size: 14px;
+  line-height: 1.3;
+  /* allow long phrases to wrap instead of pushing layout wide */
+  overflow-wrap: anywhere;      /* modern */
+  word-break: break-word;       /* fallback */
+  white-space: normal;
+  min-width: 0;                 /* prevent flex/grid overflow */
 }
+
 
 #clearAmenities {
   margin-top: 15px;
@@ -352,3 +374,147 @@ th, td {
 #clearAmenities:hover {
   background-color: #005f8d;
 }
+
+/* === Filters layout rows (clean version) === */
+
+.filter-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.filter-field {
+  flex: 1;
+  min-width: 220px;
+}
+
+/* smaller width for entries-per-page */
+.small-field {
+  /* flex: 0 0 180px; */
+    flex: 0 0 20px;
+}
+
+/* buttons container */
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* amenities full width below rows */
+.amenities-details {
+  margin-top: 10px;
+}
+
+/* ===== MOBILE / SMALL WINDOW SPACING ===== */
+@media (max-width: 900px) {
+  /* stack rows vertically */
+  .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  /* make all controls full width */
+  .filter-field,
+  .small-field,
+  .filter-buttons,
+  .filter-buttons button,
+  .view-toggle {
+    width: 100%;
+  }
+
+  /* tighten view-toggle spacing */
+  .view-toggle {
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  /* reduce label–input spacing */
+  .filters label {
+    margin-bottom: 2px;
+  }
+
+  /* make inputs/selects a bit shorter and closer */
+  .filters select,
+  .filters input[type="text"] {
+    margin-top: 4px;
+    padding: 6px 8px;
+  }
+
+  /* make buttons shorter and closer together */
+  .filter-buttons button {
+    padding: 8px 10px;
+    margin-top: 4px;
+  }
+
+  /* slightly reduce space before amenities */
+  .amenities-details {
+    margin-top: 6px;
+  }
+}
+
+/* === FINAL COMPACT SPACING FOR FILTER AREA === */
+
+.filters {
+  padding: 10px 12px;              /* tighter card padding */
+}
+
+/* labels above entries, region, keyword */
+.filters label {
+  margin-top: 0;                   /* remove extra gap above */
+  margin-bottom: 2px;              /* tiny gap under label */
+}
+
+/* rows (view+entries+buttons, region+keyword) */
+.filter-row {
+  margin-bottom: 6px;              /* was 12px */
+  gap: 8px;                        /* was 20px */
+}
+
+/* view-toggle (Listing/Table) */
+.filters .view-toggle {
+  margin-bottom: 0;                /* remove extra space under radios */
+}
+
+/* inputs + selects INSIDE filters only */
+.filters input[type="text"],
+.filters select {
+  margin-top: 2px;
+  padding: 4px 8px;                /* shorter controls */
+  height: 34px;                    /* was 40+ */
+  font-size: 15px;
+}
+
+/* buttons INSIDE filters only (Excel / Print) */
+.filters .filter-buttons button {
+  margin-top: 2px;
+  padding: 6px 10px;               /* shorter buttons */
+}
+
+/* space before "Filter by Amenities" */
+.filters details {
+  margin-top: 8px;                 /* smaller than before */
+}
+
+/* === TIGHTEN SPACE BETWEEN ENTRIES & BUTTONS (ROW 1) === */
+
+/* Make row 1 children sit closer together */
+.filters .row-top {
+  gap: 4px;              /* was larger; reduces vertical space */
+  margin-bottom: 6px;    /* smaller gap before Region row */
+}
+
+/* Ensure there is no extra margin before the buttons */
+.filters .row-top .filter-buttons {
+  margin-top: 0;
+}
+
+/* Remove extra margin on the buttons themselves in row 1 */
+.filters .row-top .filter-buttons button {
+  margin-top: 0;
+}
+

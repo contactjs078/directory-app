@@ -15,48 +15,65 @@
 
 <body>
   <header>
-    <h1>Ontario Retirement Residence Directory</h1>
-    <p>Search and explore retirement residences across Ontario.</p>
+    <!-- <h1>Ontario Retirement Residence Directory</h1>
+    <p>Search and explore retirement residences across Ontario.</p> -->
   </header>
 
   <section class="filters">
-    <div class="view-toggle">
+
+  <!-- NEW ROW 1: View toggle + Entries per page + Buttons -->
+  <div class="filter-row row-top">
+    <div class="view-toggle filter-field">
       <label><input type="radio" name="viewMode" value="card" checked /> Listing Card View</label>
       <label><input type="radio" name="viewMode" value="table" /> Table View</label>
     </div>
 
-    <label for="regionFilter">Region:</label>
-    <select id="regionFilter">
-      <option value="">All Regions</option>
-      <!-- Regions will be dynamically loaded from region.xlsx -->
-    </select>
+      <div class="filter-field small-field">
+        <label for="pageSize">Entries per page:</label>
+        <select id="pageSize">
+          <option value="5" selected>5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+        </select>
+      </div>
 
-    <label for="searchInput">Keyword:</label>
-    <input type="text" id="searchInput" placeholder="Search using a keyword" />
+      <div class="filter-buttons">
+        <button id="exportBtn">Export to Excel</button>
+        <button id="printBtn">Print</button>
+        <!-- <button id="pdfBtn">Export to PDF</button> -->
+      </div>
+    </div>
 
-    <details>
+    <!-- ROW 2: Region + Keyword -->
+    <div class="filter-row row-middle">
+      <div class="filter-field">
+        <label for="regionFilter">Region:</label>
+        <select id="regionFilter">
+          <option value="">All Regions</option>
+          <!-- Regions will be dynamically loaded from region.xlsx -->
+        </select>
+      </div>
+
+      <div class="filter-field">
+        <label for="searchInput">Keyword Search:</label>
+        <input type="text" id="searchInput" placeholder="Search using a keyword" />
+      </div>
+    </div>
+
+    <!-- ROW 3: Amenities at the bottom -->
+    <details class="amenities-details">
       <summary><strong>Filter by Amenities</strong></summary>
       <button id="clearAmenities" type="button">Clear Filters</button>
       <div id="amenitiesContainer" class="amenities-grid">
         <!-- amenities will be dynamically loaded from amenities.xlsx -->
       </div>
     </details>
-
-    <label for="pageSize">Entries per page:</label>
-    <select id="pageSize">
-      <option value="5" selected>5</option>
-      <option value="10">10</option>
-      <option value="25">25</option>
-    </select>
-
-    <!-- <button id="exportBtn">Export to Excel</button>
-    <button id="printBtn">Print</button>
-    <button id="pdfBtn">Export to PDF</button> -->
   </section>
 
   <p id="entryCount" class="entry-count"></p>
-
   <div id="cardContainer" class="card-view"></div>
+
+
 
   <section class="directory">
     <div class="table-wrapper">
@@ -83,10 +100,10 @@
       <button id="nextPage">Next</button>
     </div>
     <!-- Attribution -->
-    <p>Uses SheetJS licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</p>
-    <p>Uses html2pdf.js licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
+    <!-- <p>Uses SheetJS licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</p>
+    <p>Uses html2pdf.js licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p> -->
     <!--removed slash from href-->
-    <p><a href="attribution.html">Open Source Attribution</a></p>
+    <!-- <p><a href="attribution.html">Open Source Attribution</a></p> -->
   </section>
 
   <div id="popupOverlay" class="popup-overlay" style="display:none;">

@@ -28,10 +28,7 @@ window.addEventListener('DOMContentLoaded', () => {
         email: r['Email'] || '',
         website: r['Website'] || '',
         amenities: r['Amenities'] || '',
-        map: r['Google Maps Link'] || '',
-        desc: r['Description'] || '',
-        available: r['Available Units'] || '',
-        details: r['Additional Details'] || ''
+        map: r['Google Maps Link'] || ''
       }));
 
       filteredResults = [...residences];
@@ -100,6 +97,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Other filters and controls
   document.getElementById('searchInput').addEventListener('input', applyFilters);
+  const addrEl = document.getElementById('addressSearch');
+  if (addrEl) addrEl.addEventListener('input', applyFilters);
+
+  const nameEl = document.getElementById('nameSearch');
+  if (nameEl) nameEl.addEventListener('input', applyFilters);
+
 
   document.getElementById('pageSize').addEventListener('change', e => {
     pageSize = parseInt(e.target.value) || 5;
@@ -136,36 +139,59 @@ window.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('exportBtn').addEventListener('click', exportToExcel);
   document.getElementById('printBtn').addEventListener('click', printView);
-  document.getElementById('pdfBtn').addEventListener('click', exportToPDF);
-});
+  const pdfBtn = document.getElementById('pdfBtn');
+  if (pdfBtn) pdfBtn.addEventListener('click', exportToPDF);
 
+});
+// namebar tirth
 function applyFilters() {
   const region = document.getElementById('regionFilter').value.toLowerCase();
-  const search = document.getElementById('searchInput').value.toLowerCase();
+  const addressSearch = (document.getElementById('addressSearch')?.value || '').toLowerCase().trim();
+  const nameSearch    = (document.getElementById('nameSearch')?.value || '').toLowerCase().trim();
+
+  const rawSearch = document.getElementById('searchInput').value.toLowerCase().trim(); //added those two lines for varun dual search
+  const searchTokens = rawSearch ? rawSearch.split(/[\s,]+/).filter(Boolean) : []; //this two lines for varun dual search
+
   const amenityFilters = Array.from(document.querySelectorAll('#amenitiesContainer input[type="checkbox"]:checked'))
     .map(cb => cb.value.toLowerCase());
 
   filteredResults = residences.filter(r => {
+    const rName = (r.name || '').toLowerCase();
+    const rRegion = (r.region || '').toLowerCase();
+    const rAmenities = (r.amenities || '').toLowerCase();
+
     // Region match
     const matchesRegion = !region || (r.region && r.region.toLowerCase() === region);
-    // Keyword match across multiple fields
-    const matchesSearch = !search || [
+    const matchesName    = !nameSearch    || (r.name    && r.name.toLowerCase().includes(nameSearch));
+    const matchesAddress = !addressSearch || (r.address && r.address.toLowerCase().includes(addressSearch));
+
+    // Keyword match across multiple fields  Varun Dual Search
+    const combined = [
       r.name,
       r.address,
       r.region,
-      r.amenities
-    ].some(field => field && field.toLowerCase().includes(search));
-    
+      r.amenities,
+      r.desc,
+      r.details,
+    ].filter(Boolean).join(' ').toLowerCase();
+
+    const matchesSearch = searchTokens.length === 0 ||
+      searchTokens.every(t => combined.includes(t));
+
+
     // Amenity match: all selected amenities must be present
     const matchesAmenities = amenityFilters.length === 0 ||
-      (r.amenities && amenityFilters.every(a => r.amenities.toLowerCase().includes(a)));
+      amenityFilters.every(a => rAmenities.includes(a));
 
-    return matchesRegion && matchesSearch && matchesAmenities;
+    return matchesRegion && matchesName && matchesAddress && matchesSearch && matchesAmenities;
+
   });
 
   currentPage = 1;
   renderTable();
 }
+
+
 
 function sortData(data) {
   if (!sortConfig.key) return data;
@@ -304,7 +330,6 @@ function exportToPDF() {
         <p><strong>Email:</strong> ${r.email}</p>
         <p><strong>Website:</strong> ${r.website}</p>
         <p><strong>Amenities:</strong> ${r.amenities}</p>
-        <p><strong>Description:</strong> ${r.desc}</p>
         <p>${r.map}</p>
         <hr />
       `;
@@ -330,7 +355,6 @@ function exportToPDF() {
         <td>${r.email}</td>
         <td>${r.website}</td>
         <td>${r.amenities}</td>
-        <td>${r.desc}</td>
         <td>${r.map}</td>
       `;
       tbody.appendChild(row);
